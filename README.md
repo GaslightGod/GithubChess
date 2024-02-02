@@ -1,7 +1,6 @@
 # GaslightGod's Online Open Chess Tournament
 
-This is an open chess tournament where ANYONE can play. That's the fun part.  
-It's your turn to play! Move a <!-- BEGIN TURN -->white<!-- END TURN --> piece.
+ <!-- BEGIN TURN -->white<!-- END TURN --> to move
 
 <!-- BEGIN CHESS BOARD -->
 |   | A | B | C | D | E | F | G | H |   |
