@@ -1,6 +1,6 @@
 # GaslightGod's Online Open Chess Tournament
 
- <!-- BEGIN TURN -->white<!-- END TURN --> to move
+                <!-- BEGIN TURN -->white<!-- END TURN --> to move
 
 <!-- BEGIN CHESS BOARD -->
 |   | A | B | C | D | E | F | G | H |   |
