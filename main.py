@@ -15,12 +15,13 @@ import src.selftest as selftest
 
 # TODO: Use an image instead of a raw link to start new games
 
+# Enum to represent different actions
 class Action(Enum):
     UNKNOWN = 0
     MOVE = 1
     NEW_GAME = 2
 
-
+# Function to update top moves
 def update_top_moves(user):
     """Adds the given user to the top moves file"""
     with open('data/top_moves.txt', 'r') as file:
@@ -28,14 +29,14 @@ def update_top_moves(user):
         dictionary = ast.literal_eval(contents)
 
     if user not in dictionary:
-        dictionary[user] = 1 # First move
+        dictionary[user] = 1  # First move
     else:
         dictionary[user] += 1
 
     with open('data/top_moves.txt', 'w') as file:
         file.write(str(dictionary))
 
-
+# Function to update last moves
 def update_last_moves(line):
     """Adds the given line to the last moves file"""
     with open('data/last_moves.txt', 'r+') as last_moves:
@@ -43,7 +44,7 @@ def update_last_moves(line):
         last_moves.seek(0, 0)
         last_moves.write(line.rstrip('\r\n') + '\n' + content)
 
-
+# Function to replace text between markers
 def replace_text_between(original_text, marker, replacement_text):
     """Replace text between `marker['begin']` and `marker['end']` with `replacement`"""
     delimiter_a = marker['begin']
@@ -57,7 +58,7 @@ def replace_text_between(original_text, marker, replacement_text):
 
     return leading_text + delimiter_a + replacement_text + delimiter_b + trailing_text
 
-
+# Function to parse the issue title and determine the action
 def parse_issue(title):
     """Parse issue title and return a tuple with (action, <move>)"""
     if title.lower() == 'chess: start new game':
@@ -67,12 +68,12 @@ def parse_issue(title):
         match_obj = re.match('Chess: Move ([A-H][1-8]) to ([A-H][1-8])', title, re.I)
 
         source = match_obj.group(1)
-        dest   = match_obj.group(2)
+        dest = match_obj.group(2)
         return (Action.MOVE, (source + dest).lower())
 
     return (Action.UNKNOWN, None)
 
-
+# Main function that processes the issue and updates the game state
 def main(issue, issue_author, repo_owner):
     action = parse_issue(issue.title)
     gameboard = chess.Board()
@@ -111,7 +112,7 @@ def main(issue, issue_author, repo_owner):
         with open('data/last_moves.txt') as moves:
             line = moves.readline()
             last_player = line.split(':')[1].strip()
-            last_move   = line.split(':')[0].strip()
+            last_move = line.split(':')[0].strip()
 
         for move in game.mainline_moves():
             gameboard.push(move)
@@ -180,7 +181,7 @@ def main(issue, issue_author, repo_owner):
         with open('data/last_moves.txt', 'r') as last_moves_file:
             lines = last_moves_file.readlines()
             pattern = re.compile('.*: (@[a-z\\d](?:[a-z\\d]|-(?=[a-z\\d])){0,38})', flags=re.I)
-            player_list = { re.match(pattern, line).group(1) for line in lines }
+            player_list = {re.match(pattern, line).group(1) for line in lines}
 
         if gameboard.result() == '1/2-1/2':
             issue.add_to_labels('👑 Draw!')
@@ -190,7 +191,7 @@ def main(issue, issue_author, repo_owner):
         issue.create_comment(settings['comments']['game_over'].format(
             outcome=win_msg.get(gameboard.result(), 'UNKNOWN'),
             players=', '.join(player_list),
-            num_moves=len(lines)-1,
+            num_moves=len(lines) - 1,
             num_players=len(player_list)))
 
         os.rename('games/current.pgn', datetime.now().strftime('games/game-%Y%m%d-%H%M%S.pgn'))
