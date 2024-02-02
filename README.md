@@ -63,4 +63,87 @@ Select your next move! <!-- BEGIN TURN -->white<!-- END TURN --> to move
 <!-- END TOP MOVES -->
 </details>
 
+# How It Works
+
+  This repository contains a Python script that automates chess games through GitHub issues. Users can make moves and start new games by creating specific issues, and the script processes these actions accordingly.
+
+## Game Initiation
+
+To start a new chess game, follow these steps:
+
+1. **Create an Issue:**
+   - Title: "Chess: Start New Game"
+
+2. **Validation:**
+   - Only the repository owner can initiate a new game.
+
+3. **Outcome:**
+   - If the initiation is successful, the script creates a new game instance.
+   - The README.md file is dynamically updated to reflect the new game's state.
+
+4. **Error Handling:**
+   - If a game is already in progress and a non-owner attempts to start a new game, an error is communicated, and the issue is closed.
+
+5. **Last Moves Update:**
+   - The last moves file is updated to reflect the start of the new game.
+
+6. **Game Headers:**
+   - Event details, site information, date, and round are set in the game headers.
+
+7. **Readme Update:**
+   - The README.md file is dynamically updated to display the initial state of the chess board, moves list, and other relevant information.
+
+  ## Making Moves
+
+To make a move in the chess game, follow these steps:
+
+1. **Create an Issue:**
+   - Title: "Chess: Move [source] to [destination]"
+   - Replace `[source]` and `[destination]` with the respective chess coordinates (e.g., "Chess: Move E2 to E4").
+
+2. **Validation:**
+   - The script validates the move, ensuring it adheres to standard chess rules.
+   - Checks are performed for consecutive moves, invalid positions, and other game conditions.
+
+3. **Outcome:**
+   - If the move is valid, the script updates the game board and provides feedback in the issue.
+   - Labels indicating capture and player turn are applied.
+   - Top moves and last moves statistics are updated.
+
+4. **Readme Update:**
+   - The README.md file is dynamically updated to reflect the current state of the chess board, moves list, and other relevant information.
+
+5. **Alternatively:**
+   - You can select the move you would like to make from the corresponding dropdown of valid moves!
+
+
+
+## Game Over
+
+The chess game can conclude with various outcomes, and the script handles the conclusion as follows:
+
+1. **End Conditions:**
+   - The game can end in a draw, white win, or black win based on standard chess rules.
+
+2. **Summary:**
+   - Upon game completion, the script archives the current game.
+   - A summary comment is added to the issue, indicating the outcome and providing details on the players involved.
+
+3. **Labeling:**
+   - Labels are applied to the issue to denote the result, such as "Draw!" or "Winner!"
+
+4. **Cleanup:**
+   - The current game is archived, and the last moves file is removed.
+
+5. **Readme Update:**
+   - The README.md file is dynamically updated to reflect the final state of the chess board, moves list, and other relevant information.
+
+
+## Dependencies
+
+- [python-chess](https://python-chess.readthedocs.io/): A Python chess library for chess move generation and validation.
+- [PyYAML](https://pyyaml.org/): A YAML parser and emitter for Python.
+
+
+
 ---
